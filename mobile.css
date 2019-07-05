@@ -1,5 +1,5 @@
-@font-face { font-family: 'comic';
-	src: url('comic.ttf') format('truetype'); }
+@font-face { font-family: 'sega';
+	src: url('SEGA.TTF') format('truetype'); }
 	
 @media (max-aspect-ratio: 3/2) {
 html, body{
@@ -28,7 +28,8 @@ html, body{
 
 .wrapper .grid-box {
     box-shadow: 0 0.1rem 0.3rem hsla(0, 0%, 0%, 0.15), 0 1px 2px rgba(0,0,0,0.24);
-	animation: fadein 1s ease-out normal forwards;
+    animation: fadein 1s linear normal forwards;
+    animation: pulse 5s linear infinite normal forwards;
 }
 
 .wrapper .grid-box:hover {
@@ -39,16 +40,24 @@ html, body{
 
 .wrapper .element1 { grid-area: box1; animation-delay:0ms;}
 .wrapper .element2 { grid-area: box2; animation-delay:100ms;}
-.wrapper .element3 { grid-area: box3; animation-delay:100ms;}
+.wrapper .element3 { grid-area: box3; animation-delay:150ms;}
 .wrapper .element4 { grid-area: box4; animation-delay:200ms;}
-.wrapper .element5 { grid-area: box5; animation-delay:200ms;}
+.wrapper .element5 { grid-area: box5; animation-delay:250ms;}
 .wrapper .element6 { grid-area: box6; animation-delay:300ms;}
-.wrapper .element7 { grid-area: box7; animation-delay:300ms;}
+.wrapper .element7 { grid-area: box7; animation-delay:350ms;}
 
 @keyframes fadein {
     0% {transform: scale(0);}
     70% {transform: scale(0.85);}
     100% {transform: scale(1);}
+}
+
+@keyframes pulse {
+    0% {background: rgba(0, 192, 112, 0.561)}
+    25%{background: rgba(71, 0, 185, 0.561)}
+    50%{background: rgba(185, 0, 15, 0.561)}
+    75%{background: rgba(182, 185, 0, 0.561)}
+    100% {background: rgba(0, 192, 112, 0.561)}
 }
 
 div {
@@ -58,40 +67,30 @@ div {
     padding: 0em 1em 1em;
 }
 
+h2 {
+    text-align: center;
+}
+
+ul {
+    display: table;
+    margin: auto;
+    text-align:left;
+}
+
+
+#head {	
+    line-height: 2em;
+    background-color: #00000049;
+}
 
 #logo {
     width: 100%;
     object-fit: contain;
 }
 
-#coding h2 {
-	text-align: center;
-}
-#coding ul {
-    display: table;
-    margin: auto;
-    text-align: left;
-}
-
-#music h2 {
-	text-align: center;
-}
-#music ul { 
-    margin: auto;
-    text-align:left;
-} 
-
-#contact h2 {
-	text-align: center;
-}
-
-
 #right {
 	text-align: center;
     background: #535c5cc4;
-}
-#right h2 {
-	text-align: center;
 }
 #IM{
     text-align: center;
