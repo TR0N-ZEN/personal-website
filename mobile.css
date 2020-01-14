@@ -3,11 +3,11 @@
 	
 @media (max-aspect-ratio: 3/2) {
 html, body{
-	background-color: #30147e;
-	color: #6cc920d7;
+	background-color: #3705c0;
+	color: #16d836;
 	font-family: sega, sans-serif;
-	line-height:2em;
-	font-size:16px;
+	line-height:5vmin;
+	font-size:3vmin;
 	overflow-wrap:break-word;
     margin:0;
 	padding:0;
@@ -15,56 +15,51 @@ html, body{
 
 .wrapper {
     display:grid;
-    grid-gap:0.5rem;
     grid-template-areas:
-     "box1"
-     "box2"
-     "box3"
-     "box4"
-     "box5"
-     "box6"
-     "box7";
+    "head"
+    "math"
+    "music"
+    "sports"
+    "coding"
+    "contact"
+    "rights"
+    "Impressum";
 }
 
 .wrapper .grid-box {
-    box-shadow: 0 0.1rem 0.3rem hsla(0, 0%, 0%, 0.15), 0 1px 2px rgba(0,0,0,0.24);
-    animation: fadein 1s linear normal forwards;
-    animation: pulse 5s linear infinite normal forwards;
+    
 }
 
-.wrapper .grid-box:hover {
-    z-index:4;
-    position:relative;
-    box-shadow:0 1.5rem 2.8rem rgba(0,0,0,0.15), 0 1rem 1rem rgba(0,0,0,0.15);
+.wrapper .head {
+    grid-area: head;
 }
-
-.wrapper .element1 { grid-area: box1; animation-delay:0ms;}
-.wrapper .element2 { grid-area: box2; animation-delay:100ms;}
-.wrapper .element3 { grid-area: box3; animation-delay:150ms;}
-.wrapper .element4 { grid-area: box4; animation-delay:200ms;}
-.wrapper .element5 { grid-area: box5; animation-delay:250ms;}
-.wrapper .element6 { grid-area: box6; animation-delay:300ms;}
-.wrapper .element7 { grid-area: box7; animation-delay:350ms;}
-
-@keyframes fadein {
-    0% {transform: scale(0);}
-    70% {transform: scale(0.85);}
-    100% {transform: scale(1);}
+.wrapper .math {
+    grid-area: math; 
 }
-
-@keyframes pulse {
-    0% {background: rgba(0, 192, 112, 0.561)}
-    25%{background: rgba(71, 0, 185, 0.561)}
-    50%{background: rgba(185, 0, 15, 0.561)}
-    75%{background: rgba(182, 185, 0, 0.561)}
-    100% {background: rgba(0, 192, 112, 0.561)}
+.wrapper .music {
+    grid-area: music;
+}
+.wrapper .coding {
+    grid-area: coding; 
+}
+.wrapper .sports {
+    grid-area: sports;
+}
+.wrapper .contact {
+    grid-area: contact;
+}
+.wrapper .rights {
+    grid-area: rights;
+}
+.wrapper .Impressum {
+    grid-area: Impresum;
 }
 
 div {
+    margin: 0;
+    padding: 2vh 0vw;
     text-align: center;
-	background: rgba(36, 129, 191, 0.527);
-    border: 3px solid #ff660091;
-    padding: 0em 1em 1em;
+    align-items: center;
 }
 
 h2 {
@@ -73,28 +68,9 @@ h2 {
 
 ul {
     display: table;
+    list-style: none;
     margin: auto;
     text-align:left;
-}
-
-
-#head {	
-    line-height: 2em;
-    background-color: #00000049;
-}
-
-#logo {
-    width: 100%;
-    object-fit: contain;
-}
-
-#right {
-	text-align: center;
-    background: #535c5cc4;
-}
-#IM{
-    text-align: center;
-    background: #535c5cc4;
 }
 
 }
