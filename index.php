@@ -14,9 +14,6 @@
         <script src="pre_script.js" defer="true"></script>
     </head>
     <body>
-        <?php
-        echo "My first PHP script!";
-        ?>
         <main class="wrapper">
             <div id="head" class="head grid-box">
                 <h1>tr - development</h1>
@@ -40,7 +37,7 @@
                     <li>JavaScript</li>
                     <li id="jscript"></li>
                     <?php
-                    print "<li>inserted via PHP</li>";
+                        print "<li>inserted via PHP</li>";
                     ?>
                 </ul>
             </div>
@@ -66,17 +63,12 @@
 				</address>
             </div>
             <div id="form"  class="form grid-box">
-                <form action="messi.php" method="post">
-                    <input type="text" name="name" placeholder="NAME"><br>
-                    <input type="text" name="email" placeholder="YOUR EMAIL"><br>
-                    <input type="text" name="subject" placeholder="SUBJECT"><br>
-                    <textarea type="text" name="message" placeholder="YOUR MESSAGE"></textarea><br>
-                    <button type="submit" name="submit">SEND</button>
-                </form>
+                <h2>Formular</h2>
+                <?php include "messi.php";?>
             </div>
             <div id="rights" class="rights grid-box">
                 <h2>right</h2>
-                <button type="button" onclick="document.write('U are a dumbass of no measure')">Try it</button> 
+                <!-- <button type="button" onclick="document.write('U are a dumbass of no measure')">Try it</button> -->
             </div>
         </main>
         <script src="post_script.js"></script>

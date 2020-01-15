@@ -21,12 +21,7 @@ html, body{
      "sports coding"
      "contact contact"
      "form form"
-     "rights rights"
-     "Impressum Impressum";
-}
-
-.wrapper .grid-box {
-    
+     "rights rights";
 }
 
 .wrapper .head {
@@ -52,9 +47,6 @@ html, body{
 }
 .wrapper .rights {
     grid-area: rights;
-}
-.wrapper .Impressum {
-    grid-area: Impressum;
 }
 
 div {
