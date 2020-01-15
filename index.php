@@ -39,6 +39,9 @@
                     <li>Python</li>
                     <li>JavaScript</li>
                     <li id="jscript"></li>
+                    <?php
+                    print "<li>inserted via PHP</li>";
+                    ?>
                 </ul>
             </div>
             <div id="music" class="music grid-box">
@@ -62,9 +65,18 @@
 					theo.reichert7@gmail.com<br/> 
 				</address>
             </div>
+            <div id="form"  class="form grid-box">
+                <form action="messi.php" method="post">
+                    <input type="text" name="name" placeholder="NAME"><br>
+                    <input type="text" name="email" placeholder="YOUR EMAIL"><br>
+                    <input type="text" name="subject" placeholder="SUBJECT"><br>
+                    <textarea type="text" name="message" placeholder="YOUR MESSAGE"></textarea><br>
+                    <button type="submit" name="submit">SEND</button>
+                </form>
+            </div>
             <div id="rights" class="rights grid-box">
                 <h2>right</h2>
-                <button type="button" onclick="document.write('U are a dumbass of no measure')">Try it</button>
+                <button type="button" onclick="document.write('U are a dumbass of no measure')">Try it</button> 
             </div>
         </main>
         <script src="post_script.js"></script>

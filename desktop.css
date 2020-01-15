@@ -20,6 +20,7 @@ html, body{
      "math music"
      "sports coding"
      "contact contact"
+     "form form"
      "rights rights"
      "Impressum Impressum";
 }
@@ -45,6 +46,9 @@ html, body{
 }
 .wrapper .contact {
     grid-area: contact;
+}
+.wrapper .form {
+    grid-area: form;
 }
 .wrapper .rights {
     grid-area: rights;

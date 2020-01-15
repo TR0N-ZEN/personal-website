@@ -48,6 +48,9 @@ html, body{
 .wrapper .contact {
     grid-area: contact;
 }
+.wrapper .form {
+    grid-area: form;
+}
 .wrapper .rights {
     grid-area: rights;
 }
