@@ -3,14 +3,14 @@
 	
 @media (max-aspect-ratio: 3/2) {
 html, body{
-	background-color: #3705c0;
+	background-color:#000;
 	color: #16d836;
 	font-family: sega, sans-serif;
-	line-height:5vmin;
-	font-size:3vmin;
-	overflow-wrap:break-word;
-    margin:0;
-	padding:0;
+	line-height: 5vmin;
+	font-size: 3vmin;
+	overflow-wrap: break-word;
+    margin: 0;
+	padding: 0;
 }
 
 .wrapper {
@@ -22,12 +22,8 @@ html, body{
     "sports"
     "coding"
     "contact"
-    "rights"
-    "Impressum";
-}
-
-.wrapper .grid-box {
-    
+    "form"
+    "rights";
 }
 
 .wrapper .head {
@@ -54,13 +50,10 @@ html, body{
 .wrapper .rights {
     grid-area: rights;
 }
-.wrapper .Impressum {
-    grid-area: Impresum;
-}
 
 div {
     margin: 0;
-    padding: 2vh 0vw;
+    padding: 10vh auto;
     text-align: center;
     align-items: center;
 }
@@ -72,8 +65,41 @@ h2 {
 ul {
     display: table;
     list-style: none;
-    margin: auto;
+    margin: 0 auto;
+    padding: 0;
     text-align:left;
+}
+
+input {
+    width: 50%;
+    height: 5vh;
+    font-size: 3vmin;
+    padding: 2vmin;
+    border: 0.5vmin solid #16d836;
+    background-color:#000;
+    color: #16d836;
+    resize: none;
+  }
+
+textarea {
+    width: 50%;
+    height: 30vh;
+    font-size: 3vmin;
+    padding: 2vmin;
+    border: 0.5vmin solid #16d836;
+    background-color:#000;
+    color: #16d836;
+    resize: none;
+}
+
+button {
+    padding: 1vh 1vw;
+    border: none;
+    background-color: #16d836; /* Green */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 3vmin;
 }
 
 }

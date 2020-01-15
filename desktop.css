@@ -3,7 +3,7 @@
 
 @media (min-aspect-ratio:3/2) {
 html, body{
-	background-color: #3705c0;
+	background-color:#000;
 	color: #16d836;
 	font-family: sega, sans-serif;
     font-size: 3vmin;
@@ -67,4 +67,37 @@ ul {
     text-align:left;
 }
 
+input {
+    width: 50%;
+    height: 5vh;
+    font-size: 3vmin;
+    padding: 2vmin;
+    border: 0.5vmin solid #16d836;
+    background-color:#000;
+    color: #16d836;
+    resize: none;
+  }
+
+textarea {
+    width: 50%;
+    height: 5vh;
+    font-size: 3vmin;
+    padding: 2vmin;
+    border: 0.5vmin solid #16d836;
+    background-color:#000;
+    color: #16d836;
+    resize: none;
+    
 }
+
+button {
+    padding: 1vh 1vw;
+    border: none;
+    background-color: #16d836; /* Green */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 3vmin;
+}
+
+}   
