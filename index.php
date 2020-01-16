@@ -36,9 +36,7 @@
                     <li>Python</li>
                     <li>JavaScript</li>
                     <li id="jscript"></li>
-                    <?php
-                        print "<li>inserted via PHP</li>";
-                    ?>
+                    <?php print '<li>inserted via PHP</li>'; ?>
                 </ul>
             </div>
             <div id="music" class="music grid-box">
@@ -64,7 +62,7 @@
             </div>
             <div id="form"  class="form grid-box">
                 <h2>Formular</h2>
-                <?php include "messi.php";?>
+                <?php include 'messi.php'; ?>
             </div>
             <div id="rights" class="rights grid-box">
                 <h2>right</h2>

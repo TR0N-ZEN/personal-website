@@ -1,7 +1,5 @@
 <?php 
 
-$name = $email = $subject = $message = "";
-
 $Errorlist = array(false, false, false, false);
 
 if(isset($_POST["submit"])) {
