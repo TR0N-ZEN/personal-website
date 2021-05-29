@@ -35,10 +35,10 @@
 		align-items: center;
 		justify-content: center;
 	}
+		div.animation > div { border: 3px solid #000000; height: 30vh; width: 30vh; }
+		.container { width:inherit; height:inherit; }
 	div.text
 	{
 		grid-area: text;
 	}
-	.circle { height: 30vh; width: 30vh; }
-	.circle > .container { width:inherit; height:inherit; }
 }

@@ -30,12 +30,12 @@ class matrix
 
 function rotation_matrix(angle)
 {
-	return new matrix(safe_cos(angle),0,0,safe_sin(angle)*(-1),0,0);
+	return (new matrix(safe_cos(angle),safe_sin(angle),(-1)*safe_sin(angle),safe_cos(angle),0,0));
 }
 
-function apply_matrix(m, id) // applies a given 2x3 matrix to an svg element like <line /> or <rect /> selected by id
+function apply_matrix(m, svg_object) // applies a given 2x3 matrix to an svg element like <line /> or <rect /> selected by id
 {
-	let svg_matrix = document.getElementById(id).transform.baseVal[0].matrix;
+	let svg_matrix = svg_object.transform.baseVal[0].matrix;
 	svg_matrix.a = m.a;
 	svg_matrix.b = m.b;
 	svg_matrix.c = m.c;
@@ -69,26 +69,32 @@ function move_line (line, x, y)
 //main
 
 let angle = 0;
-let vector = document.getElementById("vector");
-let x = document.getElementById("x");
-let y = document.getElementById("y");
+const vector = document.getElementById("vector");
+const x = document.getElementById("x");
+const y = document.getElementById("y");
+const rect = document.getElementById("rect");
+const line = document.getElementById("line");
 const r = 100; // line length
-let cos, sin = undefined;
+let cos, sin, m = undefined;
 setInterval(
 	() =>
 	{
 		angle = (angle+1)%360;
 		cos = safe_cos(angle);
 		sin = safe_sin(angle);
+		m = rotation_matrix(angle);
 		move_line_head (x, cos*r, 0);
 		move_line_foot (y, cos*r, 0);
 		move_line_head (y, cos*r, (-1)*sin*r);
 		rotate_line(vector, angle);
-	}, 10
+		apply_matrix(m, rect);
+		apply_matrix(m, line);
+	}, 20
 );
 
+
 // setTimeout(()=>{
-// 	apply_matrix(rotation_matrix(45), "vector");
+	
 // },5000);
 
 //
