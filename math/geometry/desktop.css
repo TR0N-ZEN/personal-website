@@ -1,0 +1,44 @@
+@media (min-aspect-ratio:3/2) {
+	html, body
+	{
+		background-color:#fff;
+		color: #000000;
+		font-family: sega, sans-serif;
+		font-size: 3vmin;
+		line-height: 5vmin;
+		overflow-wrap: break-word;
+		margin: 0;
+		padding: 0;
+	}
+
+	.wrapper
+	{
+		display: grid;
+		height: 100vh;
+		width: 100vw;
+		grid-template-areas:
+			"animation_field text";
+		grid-template-columns: 70% 30%;
+		grid-template-rows: 100%;
+	}
+
+	.wrapper > div
+	{
+		border: 8px solid grey;
+	}
+	div.animation
+	{
+		grid-area: animation_field;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: center;
+	}
+	div.text
+	{
+		grid-area: text;
+	}
+	.circle { height: 30vh; width: 30vh; }
+	.circle > .container { width:inherit; height:inherit; }
+}
