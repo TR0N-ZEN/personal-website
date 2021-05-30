@@ -12,6 +12,48 @@ function safe_cos (angle)
 	return (Math.abs(val)>1e-2)*(val) + (Math.abs(val)<=1e-2)*(0);
 }
 
+class svg
+{
+	static id = 0;
+	static apply_matrix(m, svg_object) // applies a given 2x2 matrix to an svg element like <line /> or <rect /> selected by id
+	{
+		let svg_matrix = svg_object.transform.baseVal[0].matrix;
+		svg_matrix.a = m.a;
+		svg_matrix.b = m.b;
+		svg_matrix.c = m.c;
+		svg_matrix.d = m.d;
+		svg_matrix.e = 0;
+		svg_matrix.f = 0;
+	}
+	static rotate_line (line, angle)
+	{
+		let dx = line.x2.baseVal.value - line.x1.baseVal.value;
+		let dy = line.y2.baseVal.value - line.y1.baseVal.value;
+		let line_length = Math.sqrt(dx*dx + dy*dy);
+		line.x2.baseVal.value = line_length*safe_cos(angle);
+		line.y2.baseVal.value = line_length*(-1)*safe_sin(angle);
+	}
+	static move_line_foot (line, x, y, relative=false)
+	{
+		line.x1.baseVal.value = x + (relative)*(line.x1.baseVal.value);
+		line.y1.baseVal.value = y + (relative)*(line.y1.baseVal.value);
+	}
+	static move_line_head (line, x, y, relative=false)
+	{
+		line.x2.baseVal.value = x + (relative)*(line.x2.baseVal.value);
+		line.y2.baseVal.value = y + (relative)*(line.y2.baseVal.value);
+	}
+	static shift_line (line, x, y)
+	{
+		svg.move_line_foot (line, x, y, true);
+		svg.move_line_head (line, x, y, true);
+	}
+	static draw_line(x1,y1,x2,y2,color="orange",id=`svg_${svg.id++}`,svg_container = document.getElementById("coordinate_system"),)
+	{
+		svg_container.innerHTML += `<line id="${id}" x1="${x1}" y1="${y1*(-1)}" x2="${x2}" y2="${y2*(-1)}" stroke="${color}" stroke-width="0.2" transform="matrix(1 0 0 1 0 0)"></line>`;
+	}
+}
+
 class vector
 {
 	constructor(x0,y0,x1,y1)
@@ -39,11 +81,22 @@ class vector
 	}
 	static normalize(v)
 	{
-		/*case 4*/if(v.y<0) { this.set(); }
-		/*case 3*/if(v.y<0) { v.y = 1/v.y; }
+		// /*case 4*/if(v.y<0) { this.set(); }
+		// /*case 3*/if(v.y<0) { v.y = 1/v.y; }
 		// fixing in first quadrant
-		/*case 2*/if(v.y<0) { v.set(v.x0,1/v.y0,v.x1,1/v.y1); }
+		/*case 4*/if(v.x>0 && v.y<0) { v.set(v.x0,v.y0,v.x1,v.y1); }
+		/*case 3*/if(v.x<0 && v.y>0) { v.set(-v.y0,v.x0,-v.y1,v.x1); }
+		/*case 2*/if(v.x<0 && v.y<0) { v.set(v.x1,v.y1,v.x0,v.y0); }
 		/*case 1*/if(v.x<v.y) { v.set(v.x1,v.y1,v.x0,v.x1); }
+		return v;
+	}
+	static length(v)
+	{
+		return Math.sqrt(v.x*v.x + v.y*v.y);
+	}
+	static draw(v, color = "orange")
+	{
+		svg.draw_line(v.x0,v.y0,v.x1,v.y1,color);
 	}
 }
 
@@ -81,75 +134,33 @@ class matrix_2x3 extends matrix
 	}
 }
 
-function apply_matrix(m, svg_object) // applies a given 2x3 matrix to an svg element like <line /> or <rect /> selected by id
-{
-	let svg_matrix = svg_object.transform.baseVal[0].matrix;
-	svg_matrix.a = m.a;
-	svg_matrix.b = m.b;
-	svg_matrix.c = m.c;
-	svg_matrix.d = m.d;
-	svg_matrix.e = 0;
-	svg_matrix.f = 0;
-}
 
-function rotate_line (line, angle, line_length = 100)
-{
-	line.x2.baseVal.value = line_length*safe_cos(angle);
-	line.y2.baseVal.value = line_length*(-1)*safe_sin(angle);
-}
-
-function move_line_foot (line, x, y)
-{
-	line.x1.baseVal.value = x;
-	line.y1.baseVal.value = y;	
-}
-function move_line_head (line, x, y)
-{
-	line.x2.baseVal.value = x;
-	line.y2.baseVal.value = y;
-}
-function move_line (line, x, y)
-{
-	move_line_foot (line, x, y);
-	move_line_head (line, x, y);
-}
-function draw_line(svg_container,id,x1,y1,x2,y2)
-{
-	svg_container.innerHTML += `<line id="${id}" x1="${x1}" y1="${y1*(-1)}" x2="${x2}" y2="${y2*(-1)}" stroke="orange" stroke-width="0.2" transform="matrix(1 0 0 1 0 0)"></line>`;
-}
+test = {
+	deduction_of_standard_case: function()
+	{
+		let vectors = [];
+		for (let i = 0; i < 2; i++)
+		{
+			vectors.push(new vector(Math.random()*50,Math.random()*50,Math.random()*50,Math.random()*50));
+			vector.draw(vectors[i]);
+			vector.draw(vector.normalize(vectors[i]), "green");
+		}
+	}
+};
 
 //main
-
-let angle = 0;
-const vector_1 = document.getElementById("vector");
-const x = document.getElementById("x");
-const y = document.getElementById("y");
-const rect = document.getElementById("rect");
-const line = document.getElementById("line");
-const coordinate_system = document.getElementById("coordinate_system");
-const r = 100; // line length
-let cos, sin, m = undefined;
-setInterval(
-	() =>
-	{
-		angle = (angle+1)%360;
-		cos = safe_cos(angle);
-		sin = safe_sin(angle);
-		m = matrix_2x2.rotation(angle);
-		move_line_head (x, cos*r, 0);
-		move_line_foot (y, cos*r, 0);
-		move_line_head (y, cos*r, (-1)*sin*r);
-		rotate_line(vector_1, angle);
-		apply_matrix(m, rect);
-		apply_matrix(m, line);
-	}, 20
-);
-
-
-// setTimeout(()=>{
+(function main()
+{
+	console.log("main()");
+	test.deduction_of_standard_case();
 	
-// },5000);
+	// let v = new vector(0,0,0,0);
+	// setInterval(()=>{
+	// 	v.set(Math.random()*50,Math.random()*50,Math.random()*50,Math.random()*50);
+	// 	vector.draw(v);
+	// },2000);
 
-//
-// let a = new DOMPoint(0,100);
-// var m = new DOMMatrix();
+	// setTimeout(()=>{
+		
+	// },5000);
+})();
