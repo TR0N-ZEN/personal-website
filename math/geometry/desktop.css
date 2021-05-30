@@ -1,8 +1,18 @@
+:root
+{
+	--main: black;
+	--secondary: white;
+	--third: hsl(315, 84%, 41%);
+}
+* { box-sizing: border-box; }
+
+
+
 @media (min-aspect-ratio:3/2) {
 	html, body
 	{
-		background-color:#fff;
-		color: #000000;
+		background-color:var(--main);
+		color: var(--secondary);
 		font-family: sega, sans-serif;
 		font-size: 3vmin;
 		line-height: 5vmin;
@@ -24,18 +34,18 @@
 
 	.wrapper > div
 	{
-		border: 8px solid grey;
+		border: 8px solid var(--secondary);
 	}
 	div.animation
 	{
 		grid-area: animation_field;
 		display: flex;
-		flex-direction: column;
-		flex-wrap: nowrap;
+		flex-direction: row;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
 	}
-		div.animation > div { border: 3px solid #000000; height: 30vh; width: 30vh; }
+		div.animation > div { border: 3px solid var(--secondary); height: 30vh; width: 30vh; }
 		.container { width:inherit; height:inherit; }
 	div.text
 	{
