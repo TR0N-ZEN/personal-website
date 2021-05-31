@@ -12,7 +12,7 @@ function safe_cos (angle)
 	return (Math.abs(val)>1e-2)*(val) + (Math.abs(val)<=1e-2)*(0);
 }
 
-class svg
+class Svg
 {
 	static id = 0;
 	static apply_matrix(m, svg_object) // applies a given 2x2 matrix to an svg element like <line /> or <rect /> selected by id
@@ -45,16 +45,20 @@ class svg
 	}
 	static shift_line (line, x, y)
 	{
-		svg.move_line_foot (line, x, y, true);
-		svg.move_line_head (line, x, y, true);
+		Svg.move_line_foot (line, x, y, true);
+		Svg.move_line_head (line, x, y, true);
 	}
-	static draw_line(x1,y1,x2,y2,color="orange",id=`svg_${svg.id++}`,svg_container = document.getElementById("coordinate_system"),)
+	static draw_line (p1,p2, color="orange",id=`svg_${Svg.id++}`,svg_container = document.getElementById("coordinate_system"))
 	{
-		svg_container.innerHTML += `<line id="${id}" x1="${x1}" y1="${y1*(-1)}" x2="${x2}" y2="${y2*(-1)}" stroke="${color}" stroke-width="0.2" transform="matrix(1 0 0 1 0 0)"></line>`;
+		svg_container.innerHTML += `<line id="${id}" x1="${p1.x}" y1="${p1.y*(-1)}" x2="${p2.x}" y2="${p2.y*(-1)}" stroke="${color}" stroke-width="0.2" transform="matrix(1 0 0 1 0 0)"></line>`;
+	}
+	static draw_point (p, color="orange", r = 0.5, id=`svg_${Svg.id++}`,svg_container = document.getElementById("coordinate_system"))
+	{
+		svg_container.innerHTML += `<circle id="${id}" cx="${p.x}" cy="${p.y*(-1)}" r="${r}" fill="${color}" stroke="${color}" stroke-width="0.5" transform="matrix(1 0 0 1 0 0)"></line>`;
 	}
 }
 
-class vector
+class Vector
 {
 	constructor(x0,y0,x1,y1)
 	{
@@ -65,49 +69,54 @@ class vector
 		this.x = x1-x0;
 		this.y = y1-y0;
 	}
-	set(x0,y0,x1,y1) { this.x0 = x0; this.y0 = y0; this.x1 = x1; this.y1 = y1; this.x = x1-x0; this.y = y1-y0; }
-	static draw_line (svg_container,id,p1,p2)
-	{
-		svg_container.innerHTML += `<line id="${id}" x1="${p1.x}" y1="${p1.y*(-1)}" x2="${p2.x}" y2="${p2.y*(-1)}" stroke="orange" stroke-width="0.2" transform="matrix(1 0 0 1 0 0)"></line>`;
-	}
+	set(x0,y0,x1,y1) { this.x0 = x0; this.y0 = y0; this.x1 = x1; this.y1 = y1; this.x = x1-x0; this.y = y1-y0; return this; }
+	scale(s) { return this.set(this.x0,this.y0, this.x0+this.x*s, this.y0+this.y*s) };
 	transform(m)
 	{
 		let x0 = m.a*this.x0+m.c*this.y0;
 		let y0 = m.b*this.x0+m.d*this.y0;
 		let x1 = m.a*this.x1+m.c*this.y1;
 		let y1 = m.b*this.x1+m.d*this.y1;
-		v.set(x0,y0,x1,y1);
-		return v;
+		return this.set(x0,y0,x1,y1);
 	}
-	static normalize(v)
+	static std(v)
 	{
-		// /*case 4*/if(v.y<0) { this.set(); }
-		// /*case 3*/if(v.y<0) { v.y = 1/v.y; }
-		// fixing in first quadrant
-		/*case 4*/if(v.x>0 && v.y<0) { v.set(v.x0,v.y0,v.x1,v.y1); }
-		/*case 3*/if(v.x<0 && v.y>0) { v.set(-v.y0,v.x0,-v.y1,v.x1); }
-		/*case 2*/if(v.x<0 && v.y<0) { v.set(v.x1,v.y1,v.x0,v.y0); }
-		/*case 1*/if(v.x<v.y) { v.set(v.x1,v.y1,v.x0,v.x1); }
-		return v;
+		let angle = 0;
+		/*case 8*/if(v.x>0 && v.y<0 && Math.abs(v.x) >= Math.abs(v.y)) { angle = 45;  }
+		/*case 7*/if(v.x>0 && v.y<0 && Math.abs(v.x) <  Math.abs(v.y)) { angle = 90;  } else
+		/*case 6*/if(v.x<0 && v.y<0 && Math.abs(v.x) <  Math.abs(v.y)) { angle = 135; } else
+		/*case 5*/if(v.x<0 && v.y<0 && Math.abs(v.x) >= Math.abs(v.y)) { angle = 180; } else
+		/*case 4*/if(v.x<0 && v.y>0 && Math.abs(v.x) >= Math.abs(v.y)) { angle = 235; } else
+		/*case 3*/if(v.x<0 && v.y>0 && Math.abs(v.x) <  Math.abs(v.y)) { angle = 270; } else
+		/*case 2*/if(v.x>0 && v.y>0 && Math.abs(v.x) <  Math.abs(v.y)) { angle = 315; }
+		console.log(`rotation angle ${angle}`);
+		///*case 1*/if(v.x>0 && v.y>0 && Math.abs(v.x) >= Math.abs(v.y)) {  }
+		return v.transform(Matrix_2x2.rotation(angle));
 	}
 	static length(v)
 	{
 		return Math.sqrt(v.x*v.x + v.y*v.y);
 	}
+	static log(v)
+	{
+		console.log(`(${v.x} ${v.y})`);
+	};
 	static draw(v, color = "orange")
 	{
-		svg.draw_line(v.x0,v.y0,v.x1,v.y1,color);
+		Svg.draw_line(new Vector(0,0,v.x0,v.y0), new Vector(0,0,v.x1,v.y1),color);
+		Svg.draw_point(new Vector(0,0,v.x0,v.y0), color);
 	}
 }
 
-class matrix{}
-class matrix_2x2 extends matrix
+class Matrix{ constructor() {}; }
+class Matrix_2x2 extends Matrix
 {
 	// resembles 2x2 matrix
 	// 		a c
 	// 		b d
 	constructor(a,b,c,d)
 	{
+		super();
 		this.a = a;
 		this.b = b;
 		this.c = c;
@@ -115,16 +124,17 @@ class matrix_2x2 extends matrix
 	}
 	static rotation(angle)
 	{
-		return (new matrix_2x2(safe_cos(angle),safe_sin(angle),(-1)*safe_sin(angle),safe_cos(angle)));
+		return (new Matrix_2x2(safe_cos(angle),safe_sin(angle),(-1)*safe_sin(angle),safe_cos(angle)));
 	}
 }
-class matrix_2x3 extends matrix
+class Matrix_2x3 extends Matrix
 {
 	// resembles 2x3 matrix
 	// 		a c e
 	// 		b d f
 	constructor(a,b,c,d,e,f)
 	{
+		super();
 		this.a = a;
 		this.b = b;
 		this.c = c;
@@ -138,12 +148,17 @@ class matrix_2x3 extends matrix
 test = {
 	deduction_of_standard_case: function()
 	{
-		let vectors = [];
-		for (let i = 0; i < 2; i++)
+		let v1,v1_std = undefined;
+		for (let i = 0; i < 1; i++)
 		{
-			vectors.push(new vector(Math.random()*50,Math.random()*50,Math.random()*50,Math.random()*50));
-			vector.draw(vectors[i]);
-			vector.draw(vector.normalize(vectors[i]), "green");
+			//v1 = new Vector(Math.random()*50,Math.random()*50,Math.random()*50,Math.random()*50);
+			v1 = new Vector(0,0,0,-20);
+			Vector.log(v1);
+			Vector.draw(v1, "red");
+			
+			v1_std = Vector.std(v1);
+			Vector.log(v1_std);
+			Vector.draw(v1_std.scale(0.5), "green");
 		}
 	}
 };
@@ -154,10 +169,10 @@ test = {
 	console.log("main()");
 	test.deduction_of_standard_case();
 	
-	// let v = new vector(0,0,0,0);
+	// let v = new Vector(0,0,0,0);
 	// setInterval(()=>{
 	// 	v.set(Math.random()*50,Math.random()*50,Math.random()*50,Math.random()*50);
-	// 	vector.draw(v);
+	// 	Vector.draw(v);
 	// },2000);
 
 	// setTimeout(()=>{

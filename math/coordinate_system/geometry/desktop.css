@@ -34,7 +34,7 @@
 		width: 100%;
 		grid-template-areas:
 			"coordinate_system text";
-		grid-template-columns: 90vh auto;
+		grid-template-columns: 90vh 0;
 		grid-template-rows: 90vh;
 	}
 
