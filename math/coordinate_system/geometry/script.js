@@ -82,13 +82,13 @@ class Vector
 	static std(v)
 	{
 		let angle = 0;
-		/*case 8*/if(v.x>0 && v.y<0 && Math.abs(v.x) >= Math.abs(v.y)) { angle = 45;  }
-		/*case 7*/if(v.x>0 && v.y<0 && Math.abs(v.x) <  Math.abs(v.y)) { angle = 90;  } else
-		/*case 6*/if(v.x<0 && v.y<0 && Math.abs(v.x) <  Math.abs(v.y)) { angle = 135; } else
-		/*case 5*/if(v.x<0 && v.y<0 && Math.abs(v.x) >= Math.abs(v.y)) { angle = 180; } else
-		/*case 4*/if(v.x<0 && v.y>0 && Math.abs(v.x) >= Math.abs(v.y)) { angle = 235; } else
-		/*case 3*/if(v.x<0 && v.y>0 && Math.abs(v.x) <  Math.abs(v.y)) { angle = 270; } else
-		/*case 2*/if(v.x>0 && v.y>0 && Math.abs(v.x) <  Math.abs(v.y)) { angle = 315; }
+		/*case 8*/if(v.x>0 && v.y<0  && Math.abs(v.x) >= Math.abs(v.y)) { angle = 45;  }
+		/*case 7*/if(v.x>=0 && v.y<0 && Math.abs(v.x) <  Math.abs(v.y)) { angle = 90;  } else
+		/*case 6*/if(v.x<0 && v.y<0  && Math.abs(v.x) <  Math.abs(v.y)) { angle = 135; } else
+		/*case 5*/if(v.x<0 && v.y<=0 && Math.abs(v.x) >= Math.abs(v.y)) { angle = 180; } else
+		/*case 4*/if(v.x<0 && v.y>0  && Math.abs(v.x) >= Math.abs(v.y)) { angle = 235; } else
+		/*case 3*/if(v.x<=0 && v.y>0 && Math.abs(v.x) <  Math.abs(v.y)) { angle = 270; } else
+		/*case 2*/if(v.x>0 && v.y>0  && Math.abs(v.x) <  Math.abs(v.y)) { angle = 315; }
 		console.log(`rotation angle ${angle}`);
 		///*case 1*/if(v.x>0 && v.y>0 && Math.abs(v.x) >= Math.abs(v.y)) {  }
 		return v.transform(Matrix_2x2.rotation(angle));
