@@ -151,11 +151,9 @@ test = {
 		let v1,v1_std = undefined;
 		for (let i = 0; i < 1; i++)
 		{
-			//v1 = new Vector(Math.random()*50,Math.random()*50,Math.random()*50,Math.random()*50);
-			v1 = new Vector(0,0,0,-20);
+			v1 = new Vector(Math.random()*50,Math.random()*50,Math.random()*50,Math.random()*50);
 			Vector.log(v1);
 			Vector.draw(v1, "red");
-			
 			v1_std = Vector.std(v1);
 			Vector.log(v1_std);
 			Vector.draw(v1_std.scale(0.5), "green");
