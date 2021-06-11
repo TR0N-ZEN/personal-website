@@ -12,7 +12,7 @@ function safe_cos (angle)
 	return (Math.abs(val)>1e-2)*(val) + (Math.abs(val)<=1e-2)*(0);
 }
 
-class matrix
+class Matrix
 {
 	// resembles 2x3 matrix
 	// 		a c e
@@ -30,7 +30,7 @@ class matrix
 
 function rotation_matrix(angle)
 {
-	return (new matrix(safe_cos(angle),safe_sin(angle),(-1)*safe_sin(angle),safe_cos(angle),0,0));
+	return (new Matrix(safe_cos(angle),safe_sin(angle),(-1)*safe_sin(angle),safe_cos(angle),0,0));
 }
 
 function apply_matrix(m, svg_object) // applies a given 2x3 matrix to an svg element like <line /> or <rect /> selected by id
